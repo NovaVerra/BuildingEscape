@@ -1,0 +1,17 @@
+##########################
+# UNREAL GENERATED FILES #
+##########################
+*/Build
+*/Binaries
+*/DerivedDataCache
+*/Intermediate
+*/Saved
+BuildingEscape/Content/StarterContent/
+
+######################
+# VS GENERATED FILES #
+######################
+*.VC.db
+BuildingEscape/.vs/BuildingEscape/v15/Browse.VC.opendb
+BuildingEscape/.vs/BuildingEscape/v15/Solution.VC.db-shm
+BuildingEscape/.vs/BuildingEscape/v15/Solution.VC.db-wal
