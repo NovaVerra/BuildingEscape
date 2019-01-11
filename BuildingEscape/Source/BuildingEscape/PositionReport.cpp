@@ -18,8 +18,7 @@ void UPositionReport::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	UE_LOG(LogTemp, Warning, TEXT("Position Report reporting for duty on chair!"));
 }
 
 
