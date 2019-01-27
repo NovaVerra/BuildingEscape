@@ -22,10 +22,13 @@ UGrabber::UGrabber()
 void UGrabber::BeginPlay()
 {
 	Super::BeginPlay();
+	FindPhysicsHandleComponent();
+	SetupInputComponent();
+}
 
-	UE_LOG(LogTemp, Warning, TEXT("Grabber reporting for duty!"));
-
-	/// Look for attached Physics Handle
+// Look for attached Physics Handle
+void UGrabber::FindPhysicsHandleComponent()
+{
 	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
 	if (PhysicsHandle)
 	{
@@ -35,8 +38,11 @@ void UGrabber::BeginPlay()
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s missing physics handle component"), *GetOwner()->GetName());
 	}
+}
 
-	/// Look for attached Input Handle
+// Look for attached Input Handle (appears at runtime only)
+void UGrabber::SetupInputComponent()
+{
 	InputComponent = GetOwner()->FindComponentByClass<UInputComponent>();
 	if (InputComponent)
 	{
@@ -54,11 +60,17 @@ void UGrabber::BeginPlay()
 void UGrabber::Grab()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Pressed"));
+
+	/// Line trace and reach any actors with physics body collision channel set
+	GetFirstPhysicsBodyInReach();
+	// If we hit something then attach a physics handle
+	// TODO attach physics handle
 }
 
 void UGrabber::Release()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
+	// TODO release physics handle
 }
 
 // Called every frame
@@ -66,6 +78,12 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	// If they physics handle is attached
+		// move the object that we're handling
+}
+
+const FHitResult UGrabber::GetFirstPhysicsBodyInReach()
+{
 	/// Get player view point
 	FVector PlayerViewPointLocation;
 	FRotator PlayerViewPointRotation;
@@ -75,18 +93,6 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	);
 
 	FVector LineTraceEnd = PlayerViewPointLocation + (PlayerViewPointRotation.Vector() * Reach);
-
-	/// Draw a red line out of player
-	DrawDebugLine(
-		GetWorld(),
-		PlayerViewPointLocation,
-		LineTraceEnd,
-		FColor(255, 0, 0),
-		false,
-		0.0f,
-		0,
-		10.0f
-	);
 
 	/// Setup query parameters
 	FCollisionQueryParams TraceParameters(FName(TEXT("")), false, GetOwner());
@@ -107,4 +113,5 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	{
 		UE_LOG(LogTemp, Warning, TEXT("RayCasting hit: %s"), *(ActorHit->GetName()));
 	}
+	return FHitResult();
 }
