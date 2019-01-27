@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PhysicsEngine/PhysicsHandleComponent.h"
+#include "Components/InputComponent.h"
 #include "Components/ActorComponent.h"
 #include "Grabber.generated.h"
 
@@ -22,9 +23,16 @@ public:
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+	// Ray cast and grab whats in reach
+	void Grab();
+	// Called when released
+	void Release();
 
 private:
 	float Reach = 100.0f;
 
 	UPhysicsHandleComponent *PhysicsHandle = nullptr;
+
+	UInputComponent *InputComponent = nullptr;
 };
