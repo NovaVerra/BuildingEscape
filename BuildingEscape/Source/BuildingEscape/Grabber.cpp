@@ -30,6 +30,8 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	if (!PhysicsHandle)
+		return;
 	// If they physics handle is attached
 	if (PhysicsHandle->GrabbedComponent)
 	{
@@ -84,7 +86,6 @@ void UGrabber::Release()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Grab Released"));
 	
-	// TODO release physics handle
 	PhysicsHandle->ReleaseComponent();
 }
 
