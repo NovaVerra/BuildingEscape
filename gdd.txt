@@ -1,0 +1,7 @@
+Escape Building/Room
+
+Brainstorm:
+	- no win or lose condition
+	- no time constraints
+	- cues to solving the "puzzle"
+	- the door will shut right as you try to make for it 
